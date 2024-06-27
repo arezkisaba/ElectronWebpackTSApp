@@ -4,13 +4,11 @@ const HomeComponent = () => {
     const [output, setOutput] = useState('');
 
     const handleRunCommand = () => {
-        const command = window.electron.platform === 'win32' ? 'dir' : 'ls';
-        console.log('window.electron.platform : ', window.electron.platform);
-        window.electron.runCommand(command);
+        window.electron.runPowerShellCommand('Get-AppxPackage');
     };
 
     useEffect(() => {
-        window.electron.onCommandResult((result) => {
+        window.electron.onPowerShellCommandResult((result) => {
             setOutput(result);
         });
     }, []);

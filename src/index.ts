@@ -68,5 +68,20 @@ ipcMain.on('run-command', (event, command) => {
     });
 });
 
+
+ipcMain.on('run-powershell-command', (event, command) => {
+    exec(`powershell.exe -Command "${command}"`, (error, stdout, stderr) => {
+        if (error) {
+            event.reply('powershell-command-result', `Error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            event.reply('powershell-command-result', `stderr: ${stderr}`);
+            return;
+        }
+        event.reply('powershell-command-result', stdout);
+    });
+});
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
