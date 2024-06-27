@@ -90,3 +90,16 @@ typings/
 
 # Electron-Forge
 out/
+
+# output directories
+dist/
+**/dist/
+build/
+
+# generated files
+*.js
+*.d.ts
+*.js.map*
+*.ts.map*
+*.map.js
+*.map.ts
