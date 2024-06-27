@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
-interface ModalComponentProps {
-    Loading: boolean;
-}
+const HomeComponent = () => {
+    const [output, setOutput] = useState('');
 
-const HomeComponent: React.FC<ModalComponentProps> = ({ Loading }) => {
+    const handleRunCommand = () => {
+        const command = window.electron.platform === 'win32' ? 'dir' : 'ls';
+        console.log('window.electron.platform : ', window.electron.platform);
+        window.electron.runCommand(command);
+    };
+
+    useEffect(() => {
+        window.electron.onCommandResult((result) => {
+            setOutput(result);
+        });
+    }, []);
 
     return (
         <div>
-            <h2>Hello from React!</h2>
+            <h1>Electron System Command Executor</h1>
+            <button onClick={handleRunCommand}>Run Command</button>
+            <pre>{output}</pre>
         </div>
     );
 };
