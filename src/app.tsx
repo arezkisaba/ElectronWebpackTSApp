@@ -1,4 +1,7 @@
 import { createRoot } from 'react-dom/client';
+import HomeComponent from './components/HomeComponent';
 
 const root = createRoot(document.body);
-root.render(<h2>Hello from React!</h2>);
+root.render(
+    <HomeComponent Loading={false} />
+);
