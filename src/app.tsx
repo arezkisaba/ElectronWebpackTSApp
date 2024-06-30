@@ -3,5 +3,5 @@ import HomeComponent from './components/HomeComponent';
 
 const root = createRoot(document.body);
 root.render(
-    <HomeComponent />
+    <HomeComponent someProp="someProp" />
 );

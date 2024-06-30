@@ -6,6 +6,8 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 import { exec } from 'child_process';
 import * as fs from 'fs';
+import { parse } from 'csv-parse';
+import { CsvRecord } from './CsvRecord';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -76,6 +78,26 @@ ipcMain.handle('execute-powershell', async (event, scriptPath : string, args : s
         });
     });
 });
+
+ipcMain.handle('parse-csv', async (event, content) => {
+    return parseCsv(content);
+});
+
+function parseCsv(content: string): Promise<CsvRecord[]> {
+    return new Promise((resolve, reject) => {
+        const records: CsvRecord[] = [];
+        parse(content, { columns: true, trim: true })
+            .on('data', (row) => {
+                records.push(row);
+            })
+            .on('end', () => {
+                resolve(records);
+            })
+            .on('error', (error) => {
+                reject(error);
+            });
+    });
+}
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
