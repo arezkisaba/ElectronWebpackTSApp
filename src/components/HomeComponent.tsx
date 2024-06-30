@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HomeComponentItemViewModel } from './HomeComponentItemViewModel';
-import BridgeService from '../services/BridgeService';
+import PowershellAdapterService from '../infrastructure/PowershellAdapterService';
 
 interface HomeComponentProps {
     parameters: string[];
@@ -11,7 +11,7 @@ const HomeComponent: React.FC<HomeComponentProps> = ({ parameters }) => {
     const [isLoadingInstalledProducts, setIsLoadingInstalledProducts] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [rows, setRows] = useState<HomeComponentItemViewModel[]>([]);
-    const bridgeService = new BridgeService();
+    const bridgeService = new PowershellAdapterService();
 
     useEffect(() => {
         console.log('Component mounted or updated');

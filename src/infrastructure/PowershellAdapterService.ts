@@ -1,12 +1,13 @@
 import { ExpectedProduct } from "../models/ExpectedProduct";
 import { InstalledProduct } from "../models/InstalledProduct";
+import { IPowershellPortService } from "../domain/IPowershellPortService";
 
-class BridgeService {
+class PowershellAdapterService implements IPowershellPortService {
     async getExpectedProducts() : Promise<ExpectedProduct[]> {
         const configFilePath = "C:/git/ElectronWebpackTSApp/src/scripts/config/Production.csv";
-        const configFileCsv = await window.electron.readFile(configFilePath);
-        const configRecords = await window.electron.getExpectedProducts(configFileCsv);
-        return configRecords;
+        const expectedProductsCsv = await window.electron.readFile(configFilePath);
+        const expectedProducts = await window.electron.getExpectedProducts(expectedProductsCsv);
+        return expectedProducts;
     }
 
     async getInstalledProducts() : Promise<InstalledProduct[]> {
@@ -23,7 +24,7 @@ class BridgeService {
             "C:/git/ElectronWebpackTSApp/src/scripts/IsProtocolOk.ps1",
             ["-appName", configRecord.Name, "-protocol", configRecord.Protocol]
         );
-        return isProtocolOk.trim().toLocaleLowerCase() == "true";
+        return isProtocolOk.trim().toLocaleLowerCase() === "true";
     }
 
     async isBristolRunning(configRecord : ExpectedProduct) : Promise<boolean> {
@@ -31,8 +32,8 @@ class BridgeService {
             "C:/git/ElectronWebpackTSApp/src/scripts/IsBristolRunning.ps1",
             ["-appName", configRecord.Name]
         );
-        return  isBristolRunning.trim().toLocaleLowerCase() == "true";
+        return  isBristolRunning.trim().toLocaleLowerCase() === "true";
     }
 }
 
-export default BridgeService;
+export default PowershellAdapterService;
