@@ -4,17 +4,17 @@ const HomeComponent = () => {
     const [output, setOutput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleRunCommand = () => {
+    const handleRunCommand = async () => {
         setIsLoading(true);
-        window.electron.runPowerShellCommand('Get-AppxPackage');
-    };
+        // const scriptPath = "C:/git/ElectronWebpackTSApp/src/scripts/GetProductItems.ps1";
+        // const result = await window.electron.executePowerShell(scriptPath, ["-environment", "Production"]);
+        // setOutput(result);
 
-    useEffect(() => {
-        window.electron.onPowerShellCommandResult((result) => {
-            setOutput(result);
-            setIsLoading(false);
-        });
-    }, []);
+        const scriptPath = "C:/git/ElectronWebpackTSApp/src/scripts/IsBristolRunning.ps1";
+        const result = await window.electron.executePowerShell(scriptPath, ["-appName", "Prevoir.Octav"]);
+        setOutput(result);
+        setIsLoading(false);
+    };
 
     if (isLoading) {
         return <div>Loading...</div>;

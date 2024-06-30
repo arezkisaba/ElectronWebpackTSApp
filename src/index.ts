@@ -5,6 +5,7 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 import { exec } from 'child_process';
+import * as fs from 'fs';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -50,36 +51,18 @@ app.on('activate', () => {
     }
 });
 
-// Handle the 'run-command' event from the renderer process
-ipcMain.on('run-command', (event, command) => {
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            event.reply('command-result', `Error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`stderr: ${stderr}`);
-            event.reply('command-result', `stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-        event.reply('command-result', `stdout: ${stdout}`);
-    });
-});
-
-
-ipcMain.on('run-powershell-command', (event, command) => {
-    exec(`powershell.exe -Command "${command}"`, (error, stdout, stderr) => {
-        if (error) {
-            event.reply('powershell-command-result', `Error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            event.reply('powershell-command-result', `stderr: ${stderr}`);
-            return;
-        }
-        event.reply('powershell-command-result', stdout);
+ipcMain.handle('execute-powershell', async (event, scriptPath : string, args : string[]) => {
+    return new Promise((resolve, reject) => {
+        const command = `powershell -File "${scriptPath}" ${args.map(arg => `"${arg}"`).join(' ')}`;
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                reject(`Error: ${error.message}`);
+            } else if (stderr) {
+                reject(`Error: ${stderr}`);
+            } else {
+                resolve(stdout);
+            }
+        });
     });
 });
 

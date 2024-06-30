@@ -1,0 +1,1 @@
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -nologo -file ".\OctavCheckProducts.ps1" -CsvFilePath "\\intranet.prevoir\sysvol\intranet.prevoir\scripts\OctavProducts\Formation.csv"

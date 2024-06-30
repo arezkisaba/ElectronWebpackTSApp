@@ -1,0 +1,17 @@
+Name,UWPName,UWPVersion,ProductCode,BristolScheduledTask
+Octav-Formation,Octav-Formation,15.2.24071.5,{2F33DE1A-F622-47E3-B627-184039F5FF15},Prevoir.Octav.Bristol
+Prevoir.OctavSolutions-Formation,Prevoir.OctavSolutions-Formation,5.0.24162.3,{EE275C20-1457-4DF0-B8AC-FDA222D4E623},Prevoir.OctavSolutions.Bristol
+ServiceDirectory-Formation,ServiceDirectory-Production,n/a,{1F02E9B8-85C4-4A61-A831-07EAD64167BE},Prevoir.ServiceDirectory.Bristol
+SynchronizationModule-Formation,SynchronizationModule-Production,n/a,{D6E66523-FAF2-4A67-9E56-2B348F650C4E},Prevoir.SynchronizationModule.Bristol
+Prevoir.SolutionRetraite-Formation,Prevoir.SolutionRetraite-Formation,5.0.24120.1,{0D836682-4A55-4555-8C16-8C90A40A7D56},Prevoir.SolutionRetraite.Bristol
+SolutionMaintienAutonomie-Formation,SolutionMaintienAutonomie-Formation,3.0.23316.1,{03695EE5-E1F2-46FD-A821-D706FF31A6AB},Prevoir.SolutionMaintienAutonomie.Bristol
+SolutionCapitalObseques-Formation,SolutionCapitalObseques-Formation,5.0.24071.3,{25F945C7-12C9-4C38-AAC9-A9D215A9C6D6},Prevoir.SolutionCapitalObseques.Bristol
+SolutionSante-Formation,SolutionSante-Formation,3.0.24066.1,{F6669F31-6911-4A96-BA6A-9F34848915AC},Prevoir.SolutionSante.Bristol
+Prevoir.SolutionPrevoyanceTNS-Formation,Prevoir.SolutionPrevoyanceTNS-Formation,3.1.24120.3,{2380C80B-2FA7-417D-B300-84D754003792},Prevoir.SolutionPrevoyanceTNS.Bristol
+Prevoir.SolutionSanteTns-Formation,Prevoir.SolutionSanteTns-Formation,2.0.24138.2,{DA3FE107-4D4A-478B-8820-E424839BF3F6},Prevoir.SolutionSanteTns.Bristol
+PrevoirProtectionSenior-Formation,PrevoirProtectionSenior-Formation,2.0.24071.4,{1C2E605A-3294-4CF8-A963-57FFE960A63D},Prevoir.PrevoirProtectionSenior.Bristol
+SolutionPlanEpargneRetraite-Formation,SolutionPlanEpargneRetraite-Formation,2.0.24050.1,{179F4796-FFAD-4B40-B469-005F2B048B43},Prevoir.SolutionPlanEpargneRetraite.Bristol
+SolutionCoupsDurs-Formation,SolutionCoupsDurs-Formation,2.0.24066.1,{15538105-2F19-4021-972C-DEBC553D3412},Prevoir.SolutionCoupsDurs.Bristol
+SolutionPrestationObseques-Formation,SolutionPrestationObseques-Formation,2.0.24050.3,{AD4DA072-B90F-4D43-8E1C-FE973A5CF843},Prevoir.SolutionPrestationObseques.Bristol
+Prevoir.SolutionPrevoyanceFamiliale-Formation,Prevoir.SolutionPrevoyanceFamiliale-Formation,2.0.24120.2,{DFE6B8D8-052E-47FF-803E-6DF9F43D2368},Prevoir.SolutionPrevoyanceFamiliale.Bristol
+Prevoir.SolutionEpargneVie-Formation,Prevoir.SolutionEpargneVie-Formation,2.0.24123.1,{F4CA4B90-A691-45F6-AE47-1BEAC39D696D},Prevoir.SolutionEpargneVie.Bristol
