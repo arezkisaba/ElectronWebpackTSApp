@@ -51,6 +51,17 @@ app.on('activate', () => {
     }
 });
 
+
+ipcMain.handle('read-file', async (event, filePath : string) => {
+    try {
+        const content = await fs.promises.readFile(filePath, 'utf-8');
+        return content;
+    } catch (error) {
+        console.error('Error reading file:', error);
+        throw error;
+    }
+});
+
 ipcMain.handle('execute-powershell', async (event, scriptPath : string, args : string[]) => {
     return new Promise((resolve, reject) => {
         const command = `powershell -File "${scriptPath}" ${args.map(arg => `"${arg}"`).join(' ')}`;
