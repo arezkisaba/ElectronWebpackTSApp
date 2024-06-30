@@ -1,6 +1,6 @@
-export interface CsvRecord {
+export interface ExpectedProduct {
     Name: string;
     Version: string;
-    HasUI: boolean;
+    HasUI: string;
     Protocol: string;
 }

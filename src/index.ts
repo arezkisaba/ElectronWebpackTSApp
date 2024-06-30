@@ -7,7 +7,8 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 import { exec } from 'child_process';
 import * as fs from 'fs';
 import { parse } from 'csv-parse';
-import { CsvRecord } from './CsvRecord';
+import { ExpectedProduct } from './models/ExpectedProduct';
+import { InstalledProduct } from './models/InstalledProduct';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -17,6 +18,7 @@ if (require('electron-squirrel-startup')) {
 const createWindow = (): void => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
+        fullscreen: false,
         height: 600,
         width: 800,
         webPreferences: {
@@ -24,11 +26,13 @@ const createWindow = (): void => {
         },
     });
 
+    mainWindow.maximize();
+
     // and load the index.html of the app.
     mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -79,13 +83,33 @@ ipcMain.handle('execute-powershell', async (event, scriptPath : string, args : s
     });
 });
 
-ipcMain.handle('parse-csv', async (event, content) => {
-    return parseCsv(content);
+ipcMain.handle('parse-config', async (event, content) => {
+    return parseConfig(content);
 });
 
-function parseCsv(content: string): Promise<CsvRecord[]> {
+ipcMain.handle('parse-installed-products', async (event, content) => {
+    return parseInstalledProducts(content);
+});
+
+function parseConfig(content: string): Promise<ExpectedProduct[]> {
     return new Promise((resolve, reject) => {
-        const records: CsvRecord[] = [];
+        const records: ExpectedProduct[] = [];
+        parse(content, { columns: true, trim: true })
+            .on('data', (row) => {
+                records.push(row);
+            })
+            .on('end', () => {
+                resolve(records);
+            })
+            .on('error', (error) => {
+                reject(error);
+            });
+    });
+}
+
+function parseInstalledProducts(content: string): Promise<InstalledProduct[]> {
+    return new Promise((resolve, reject) => {
+        const records: InstalledProduct[] = [];
         parse(content, { columns: true, trim: true })
             .on('data', (row) => {
                 records.push(row);
