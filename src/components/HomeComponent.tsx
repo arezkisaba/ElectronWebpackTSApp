@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { HomeComponentItemViewModel } from './HomeComponentItemViewModel';
-import { ExpectedProduct } from '../models/ExpectedProduct';
 
 interface HomeComponentProps {
-    someProp: string;
+    parameters: string[];
 }
 
-const HomeComponent: React.FC<HomeComponentProps> = ({ someProp }) => {
+const HomeComponent: React.FC<HomeComponentProps> = ({ parameters }) => {
     const [isLoadingConfig, setIsLoadingConfig] = useState(false);
     const [isLoadingInstalledProducts, setIsLoadingInstalledProducts] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
