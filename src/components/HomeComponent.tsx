@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HomeComponentItemViewModel } from './HomeComponentItemViewModel';
+import BridgeService from '../services/BridgeService';
 
 interface HomeComponentProps {
     parameters: string[];
@@ -10,6 +11,7 @@ const HomeComponent: React.FC<HomeComponentProps> = ({ parameters }) => {
     const [isLoadingInstalledProducts, setIsLoadingInstalledProducts] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [rows, setRows] = useState<HomeComponentItemViewModel[]>([]);
+    const bridgeService = new BridgeService();
 
     useEffect(() => {
         console.log('Component mounted or updated');
@@ -24,43 +26,31 @@ const HomeComponent: React.FC<HomeComponentProps> = ({ parameters }) => {
         setIsLoading(true);
 
         setIsLoadingConfig(true);
-        const configFilePath = "C:/git/ElectronWebpackTSApp/src/scripts/config/Production.csv";
-        const configFileCsv = await window.electron.readFile(configFilePath);
-        const configRecords = await window.electron.parseConfig(configFileCsv);
+        const expectedProducts = await bridgeService.getExpectedProducts();
         setIsLoadingConfig(false);
 
         setIsLoadingInstalledProducts(true);
-        const installedProductsCsv = await window.electron.executePowerShell(
-            "C:/git/ElectronWebpackTSApp/src/scripts/GetInstalledProducts.ps1",
-            ["-environment", "Production"]
-        );
-        const installedProducts = await window.electron.parseInstalledProducts(installedProductsCsv);
+        const installedProducts = await bridgeService.getInstalledProducts();
         setIsLoadingInstalledProducts(false);
 
         let i = 1;
-        for (const configRecord of configRecords) {
+        for (const configRecord of expectedProducts) {
             const match = installedProducts.find(installedProduct => installedProduct.ApplicationName === configRecord.Name);
-            const applicationVersion = match?.ApplicationVersion ?? "false";
+            const applicationVersion = match?.ApplicationVersion ?? "N/A";
             const isApplicationVersionOk = match ? match.ApplicationVersion === configRecord.Version : false;
             const isBristolVersionOk = match ? match.BristolVersion === configRecord.Version : false;
             const isUwpVersionOk = match ? match.UWPVersion === configRecord.Version : false;
-            const isProtocolOk = await window.electron.executePowerShell(
-                "C:/git/ElectronWebpackTSApp/src/scripts/IsProtocolOk.ps1",
-                ["-appName", configRecord.Name, "-protocol", configRecord.Protocol]
-            );
-            const isBristolRunning = await window.electron.executePowerShell(
-                "C:/git/ElectronWebpackTSApp/src/scripts/IsBristolRunning.ps1",
-                ["-appName", configRecord.Name]
-            );
-            const item: HomeComponentItemViewModel = {
+            const isProtocolOk = await bridgeService.isProtocolOk(configRecord);
+            const isBristolRunning = await bridgeService.isBristolRunning(configRecord);
+            const item : HomeComponentItemViewModel = {
                 id: i,
                 name: configRecord.Name,
                 version: applicationVersion,
                 isApplicationVersionOk: isApplicationVersionOk,
                 isBristolVersionOk: isBristolVersionOk,
                 isUwpVersionOk: configRecord.HasUI === "False" || isUwpVersionOk,
-                isProtocolOk: configRecord.HasUI === "False" || isProtocolOk.trim().toLocaleLowerCase() == "true",
-                isBristolRunning: isBristolRunning.trim().toLocaleLowerCase() === "true",
+                isProtocolOk: configRecord.HasUI === "False" || isProtocolOk,
+                isBristolRunning: isBristolRunning,
             };
             addRow(item);
             i++;

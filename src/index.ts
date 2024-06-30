@@ -57,7 +57,6 @@ app.on('activate', () => {
     }
 });
 
-
 ipcMain.handle('read-file', async (event, filePath : string) => {
     try {
         const content = await fs.promises.readFile(filePath, 'utf-8');
@@ -83,15 +82,15 @@ ipcMain.handle('execute-powershell', async (event, scriptPath : string, args : s
     });
 });
 
-ipcMain.handle('parse-config', async (event, content) => {
-    return parseConfig(content);
+ipcMain.handle('get-expected-products', async (event, content) => {
+    return getExpectedProducts(content);
 });
 
-ipcMain.handle('parse-installed-products', async (event, content) => {
-    return parseInstalledProducts(content);
+ipcMain.handle('get-installed-products', async (event, content) => {
+    return getInstalledProducts(content);
 });
 
-function parseConfig(content: string): Promise<ExpectedProduct[]> {
+function getExpectedProducts(content: string): Promise<ExpectedProduct[]> {
     return new Promise((resolve, reject) => {
         const records: ExpectedProduct[] = [];
         parse(content, { columns: true, trim: true })
@@ -107,7 +106,7 @@ function parseConfig(content: string): Promise<ExpectedProduct[]> {
     });
 }
 
-function parseInstalledProducts(content: string): Promise<InstalledProduct[]> {
+function getInstalledProducts(content: string): Promise<InstalledProduct[]> {
     return new Promise((resolve, reject) => {
         const records: InstalledProduct[] = [];
         parse(content, { columns: true, trim: true })
