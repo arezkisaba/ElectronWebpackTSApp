@@ -1,4 +1,4 @@
-export interface ExpectedProduct {
+export default interface ExpectedProduct {
     Name: string;
     Version: string;
     HasUI: string;

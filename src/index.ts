@@ -7,8 +7,8 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 import { exec } from 'child_process';
 import * as fs from 'fs';
 import { parse } from 'csv-parse';
-import { ExpectedProduct } from './models/ExpectedProduct';
-import { InstalledProduct } from './models/InstalledProduct';
+import ExpectedProduct from './domain/models/ExpectedProduct';
+import InstalledProduct from './domain/models/InstalledProduct';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {

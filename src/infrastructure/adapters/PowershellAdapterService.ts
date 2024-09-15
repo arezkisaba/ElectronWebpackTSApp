@@ -1,8 +1,8 @@
-import { ExpectedProduct } from "../models/ExpectedProduct";
-import { InstalledProduct } from "../models/InstalledProduct";
-import { IPowershellPortService } from "../domain/IPowershellPortService";
+import IPowershellPortService from "../../domain/ports/IPowershellPortService";
+import ExpectedProduct from "../../domain/models/ExpectedProduct";
+import InstalledProduct from "../../domain/models/InstalledProduct";
 
-class PowershellAdapterService implements IPowershellPortService {
+export default class PowershellAdapterService implements IPowershellPortService {
     async getExpectedProducts() : Promise<ExpectedProduct[]> {
         const configFilePath = "C:/git/ElectronWebpackTSApp/src/scripts/config/Production.csv";
         const expectedProductsCsv = await window.electron.readFile(configFilePath);
@@ -35,5 +35,3 @@ class PowershellAdapterService implements IPowershellPortService {
         return  isBristolRunning.trim().toLocaleLowerCase() === "true";
     }
 }
-
-export default PowershellAdapterService;

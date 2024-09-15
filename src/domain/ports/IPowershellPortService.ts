@@ -1,7 +1,7 @@
-import { ExpectedProduct } from "../models/ExpectedProduct";
-import { InstalledProduct } from "../models/InstalledProduct";
+import ExpectedProduct from "../models/ExpectedProduct";
+import InstalledProduct from "../models/InstalledProduct";
 
-export interface IPowershellPortService {
+export default interface IPowershellPortService {
     getExpectedProducts(): Promise<ExpectedProduct[]>;
     getInstalledProducts(): Promise<InstalledProduct[]>;
     isProtocolOk(configRecord: ExpectedProduct): Promise<boolean>;

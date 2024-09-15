@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HomeComponentItemViewModel } from './HomeComponentItemViewModel';
-import PowershellAdapterService from '../infrastructure/PowershellAdapterService';
+import PowershellAdapterService from '../infrastructure/adapters/PowershellAdapterService';
 
 interface HomeComponentProps {
     parameters: string[];

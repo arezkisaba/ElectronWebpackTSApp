@@ -1,5 +1,5 @@
-import { InstalledProduct } from "../models/InstalledProduct";
-import { ExpectedProduct } from "../models/ExpectedProduct";
+import { InstalledProduct } from "../domain/models/InstalledProduct";
+import { ExpectedProduct } from "../domain/models/ExpectedProduct";
 
 export interface IElectronAPI {
     readFile: (filePath: string) => Promise<string>;

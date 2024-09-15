@@ -1,4 +1,4 @@
-export interface InstalledProduct {
+export default interface InstalledProduct {
     ApplicationName: string;
     ApplicationVersion: string;
     BristolVersion: string;
